@@ -6,13 +6,14 @@ show columns from musicas;
 
 create table musicas(
  id int primary key auto_increment,
- nome varchar(45)
- );
+ nome varchar(45),
+ id_artistas int,
+ foreign key(id_artista) references artistas(id)
+);
  
 create table artistas(
  id int primary key auto_increment,
- nome varchar(45),
- foreign key(id_musica) references musicas(id)
+ nome varchar(45)
 );
  
  insert into artistas(nome)
