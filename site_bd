@@ -1,0 +1,27 @@
+create database site;
+use site;
+show tables;
+show columns from artistas;
+show columns from musicas;
+
+create table musicas(
+ id int primary key auto_increment,
+ nome varchar(45)
+ );
+ 
+create table artistas(
+ id int primary key auto_increment,
+ nome varchar(45),
+ foreign key(id_musica) references musicas(id)
+);
+ 
+ insert into artistas(nome)
+ values('chinara');
+ 
+ select* from artistas;
+ select * from musicas;
+
+ insert into musicas(nome)
+ values ('nome');
+
+ 
