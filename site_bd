@@ -25,4 +25,63 @@ create table artistas(
  insert into musicas(nome)
  values ('nome');
 
- 
+ import mysql.connector.connect(
+    host = 10.1.1.109
+    user= "root"
+    password= "admin"
+    database= "site"
+)
+mycursor = mydb.cursor()
+
+
+def cadastrar():
+    print('cadastrando')
+    nome = input('Digite o nome')
+
+    sql = "INSERT INTO artistas (name) VALUES (%s)"
+    valores = (nome, )
+    mycursor.execute(sql, val)
+    mydb.commit()
+
+def listar():
+    print('listando')
+
+    mycursor.execute("SELECT * FROM artistas")
+
+    myresult = mycursor.fetchall()
+
+    for x in myresult:
+    print(x)
+
+def update():
+    sql = "UPDATE artistas SET nome = 'Chinara' WHERE nome = 'nome'"
+
+    mycursor.execute(sql)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record(s) affected")
+
+def delete():
+    sql = "DELETE FROM artistas WHERE nome = 'nome'"
+
+    mycursor.execute(sql)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record(s) deleted")
+
+
+while true:
+        print('1.cadastrar artista')
+        print('2.listar artista')
+        print('3.sair')
+        opcao=int(input('escolha a opcao '))
+        if opcao == 1:
+            cadastrar()
+        elif opcao == 2:
+            listar()
+        else: 
+        print('exit')
+        break 
+
