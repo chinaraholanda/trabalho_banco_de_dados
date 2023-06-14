@@ -25,10 +25,11 @@ create table artistas(
  insert into musicas(nome)
  values ('nome');
 
- import mysql.connector.connect(
-    host = 10.1.1.109
-    user= "root"
-    password= "admin"
+import mysql.connector
+mydb = mysql.connector.connect = (
+    host = "10.1.1.109",
+    user= "root",
+    password= "admin",
     database= "site"
 )
 mycursor = mydb.cursor()
@@ -84,4 +85,3 @@ while true:
         else: 
         print('exit')
         break 
-
