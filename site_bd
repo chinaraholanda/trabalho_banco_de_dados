@@ -26,11 +26,12 @@ create table artistas(
  values ('nome');
 
 import mysql.connector
-mydb = mysql.connector.connect = (
-    host = "10.1.1.109",
-    user= "root",
-    password= "admin",
-    database= "site"
+
+mydb = mysql.connector.connect(
+     host= "localhost",
+     user= "dev",
+     password= "ifce1234",
+     database= "site"
 )
 mycursor = mydb.cursor()
 
@@ -39,9 +40,9 @@ def cadastrar():
     print('cadastrando')
     nome = input('Digite o nome')
 
-    sql = "INSERT INTO artistas (name) VALUES (%s)"
+    sql = "INSERT INTO artistas (nome) VALUES (%s)"
     valores = (nome, )
-    mycursor.execute(sql, val)
+    mycursor.execute(sql, valores)
     mydb.commit()
 
 def listar():
@@ -52,12 +53,15 @@ def listar():
     myresult = mycursor.fetchall()
 
     for x in myresult:
-    print(x)
+        print(x)
 
 def update():
-    sql = "UPDATE artistas SET nome = 'Chinara' WHERE nome = 'nome'"
+    nome = input('nome do artista que deseja alterar' )
+    novo_nome = input('novo nome' )
+    valores = (novo_nome, nome, )
+    sql = "UPDATE artistas SET nome = %s WHERE nome = %s"
 
-    mycursor.execute(sql)
+    mycursor.execute(sql, valores,)
 
     mydb.commit()
 
@@ -73,15 +77,21 @@ def delete():
     print(mycursor.rowcount, "record(s) deleted")
 
 
-while true:
+while True:
         print('1.cadastrar artista')
         print('2.listar artista')
-        print('3.sair')
+        print('3.atualizar')
+        print('4.deletar')
+        print('5.sair')
         opcao=int(input('escolha a opcao '))
         if opcao == 1:
             cadastrar()
         elif opcao == 2:
             listar()
+        elif opcao == 3:
+            update()
+        elif opcao == 4:
+            delete()      
         else: 
-        print('exit')
+            print('exit')
         break 
