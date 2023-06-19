@@ -76,13 +76,28 @@ def delete():
 
     print(mycursor.rowcount, "record(s) deleted")
 
+def juntar_tabelas():
+    sql= "SELECT \
+        artistas.nome AS artista, \
+        musicas.nome AS musica \
+        FROM artistas \
+        INNER JOIN musicas ON artistas.id_artista = artistas.nome"
+
+    mycursor.execute(sql)
+
+    myresult = mycursor.fetchall()
+
+    for x in myresult:
+        print(x)
 
 while True:
         print('1.cadastrar artista')
         print('2.listar artista')
         print('3.atualizar')
         print('4.deletar')
-        print('5.sair')
+        print('5.juntar_tabelas')
+        print('6.sair')
+
         opcao=int(input('escolha a opcao '))
         if opcao == 1:
             cadastrar()
@@ -91,7 +106,9 @@ while True:
         elif opcao == 3:
             update()
         elif opcao == 4:
-            delete()      
+            delete()   
+        elif opcao == 5:
+            juntar_tabelas()
         else: 
             print('exit')
         break 
