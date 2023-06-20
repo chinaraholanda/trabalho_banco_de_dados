@@ -30,6 +30,7 @@ SELECT artistas.nome AS artista,musicas.nome AS musica
 FROM artistas
 INNER JOIN musicas ON musicas.id_artista = artistas.id ;
 
+
 import mysql.connector
 
 mydb = mysql.connector.connect(
