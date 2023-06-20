@@ -1,6 +1,8 @@
 create database site;
 use site;
 show tables;
+show columns from artistas;
+show columns from musicas;
 
 create table musicas(
  id int primary key auto_increment,
@@ -14,16 +16,19 @@ create table artistas(
  nome varchar(45)
 );
  
- insert into artistas(nome)
- values('chinara');
- 
  select* from artistas;
  select * from musicas;
 
- insert into musicas(nome)
- values ('nome');
+insert into musicas(id_artista,nome)
+ values ('2', 'sera');
+ 
+insert into artistas(nome)
+ values('chinara');
 
---------------------------------------------------
+
+SELECT artistas.nome AS artista,musicas.nome AS musica
+FROM artistas
+INNER JOIN musicas ON musicas.id_artista = artistas.id ;
 
 import mysql.connector
 
@@ -92,12 +97,10 @@ def juntar_tabelas():
 
     myresult = mycursor.fetchall()
 
-    print("id nome")
-    for id, nome in myresult:
-        print(f"{id} {nome}")
+    print("artista, musica")
+    for artista, musica in myresult:
+        print(f"{artista} {musica}")
 
-    for x in myresult:
-        print(x)
 
 while True:
     print('1.cadastrar artista')
@@ -114,6 +117,104 @@ while True:
         listar()
     elif opcao == 3:
         alterar()
+    elif opcao == 4:
+        delete()   
+    elif opcao == 5:
+        juntar_tabelas()
+    elif opcao == 6:
+        break    
+    else: 
+        print('opcao invalida')
+
+
+
+        
+import mysql.connector
+
+mydb = mysql.connector.connect(
+     host= "10.1.1.109",
+     user= "admin",
+     password= "admin",
+     database= "site"
+)
+mycursor = mydb.cursor()
+
+
+def cadastrar_musica():
+    print('cadastrando')
+    nome = input('Digite o nome da musica')
+
+    sql = "INSERT INTO musicas (nome) VALUES (%s)"
+    valores = (nome, )
+    mycursor.execute(sql, valores)
+    mydb.commit()
+
+def listar_musica():
+    print('listando')
+
+    mycursor.execute("SELECT * FROM musicas")
+
+    myresult = mycursor.fetchall()
+    print("id nome")
+    for id, nome in myresult:
+        print(f"{id} {nome}")
+
+def alterar_musica():
+    listar()
+    id = input('o id da musica que deseja alterar' )
+    novo_nome = input('novo nome' )
+    valores = (novo_nome, id, )
+    sql = "UPDATE musicas SET nome = %s WHERE id = %s"
+
+    mycursor.execute(sql, valores,)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record(s) affected")
+
+def delete_musica():
+    listar()
+    id = input('o id da musica que deseja deletar')
+    valores = (id,)
+    sql = "DELETE FROM musicas WHERE id = %s"
+
+    mycursor.execute(sql, valores,)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record(s) deleted")
+
+def juntar_tabelas_musica():
+
+    sql= "SELECT \
+        musicas.nome AS musica, \
+        artistas.nome AS artista \
+        FROM musicas \
+        INNER JOIN artistas ON artista.id_musica = musica.id"
+
+    mycursor.execute(sql)
+
+    myresult = mycursor.fetchall()
+
+    print("musica, artista")
+    for musica, artista in myresult:
+        print(f"{musica} {artista}")
+
+while True:
+    print('1.cadastrar musica')
+    print('2.listar musica')
+    print('3.atualizar')
+    print('4.deletar')
+    print('5.juntar_tabelas')
+    print('6.sair')
+
+    opcao=int(input('escolha a opcao '))
+    if opcao == 1:
+        cadastrar_musica()
+    elif opcao == 2:
+        listar_musica()
+    elif opcao == 3:
+        alterar_musica()
     elif opcao == 4:
         delete()   
     elif opcao == 5:
